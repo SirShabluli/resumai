@@ -90,7 +90,7 @@ with tab_generate:
                 "user_request": prompt,
                 "search_queries": [],
                 "chunks": [],
-                "min_score": 0.35,
+                "min_score": 0.38,
                 "draft": "",
                 "verified_output": "",
                 "iteration": 0,
@@ -102,6 +102,27 @@ with tab_generate:
         # Show verified output
         st.markdown("### Result (verified)")
         st.markdown(result["verified_output"])
+
+        # Build full text for copy
+        copy_parts = []
+        copy_parts.append("## Result (verified)\n")
+        copy_parts.append(result["verified_output"])
+        copy_parts.append("\n\n## Draft (before verification)\n")
+        copy_parts.append(result["draft"])
+        copy_parts.append(f"\n\n## Search queries ({len(result['search_queries'])})\n")
+        for q in result["search_queries"]:
+            copy_parts.append(f"- {q}")
+        copy_parts.append(f"\n\n## Chunks used ({len(result['chunks'])})\n")
+        for c in result["chunks"]:
+            copy_parts.append(f"{c['chunk_id']} | score={c['score']:.3f} | session={c['session_key']}")
+            copy_parts.append(format_chunk_text(c["text"][:300] + "..."))
+            copy_parts.append("---")
+        copy_parts.append(f"\nCompleted in {result['iteration']} retrieval iteration(s)")
+
+        full_text = "\n".join(copy_parts)
+
+        with st.expander("📋 העתק הכול — לחץ על הכפתור בפינה"):
+            st.code(full_text, language="markdown")
 
         # Show draft before verification
         with st.expander("Draft (before verification)"):

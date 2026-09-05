@@ -76,7 +76,7 @@ def router_node(state: dict) -> dict:
 def retrieve_node(state: dict) -> dict:
     """Run all search queries and merge results."""
     queries = state["search_queries"]
-    min_score = state.get("min_score", 0.30)
+    min_score = state.get("min_score", 0.38)
 
     chunks = multi_search(queries, top_k=10, min_score=min_score)
 

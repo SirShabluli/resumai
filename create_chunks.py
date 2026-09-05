@@ -17,7 +17,7 @@ DB_NAME = "career_app"
 EMBEDDING_MODEL = "text-embedding-3-small"
 
 # Chunking params
-WINDOW_SIZE = 8      # turns per chunk
+WINDOW_SIZE = 6      # turns per chunk (smaller = more focused embeddings)
 OVERLAP = 2          # turns shared between consecutive chunks
 MAX_CHARS = 6000     # safe limit to stay under 8192 tokens
 
